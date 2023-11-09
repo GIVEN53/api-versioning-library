@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * You can use this annotation to specify the version of the API.
  * <p>
- * ex) @Version({"1.1", "2.0"})
+ * ex) @ApiVersion({"1.1", "2.0"})
  * <p>
  * It will be mapped to {uri-prefix}/v1.1, {uri-prefix}/v2.0
  *
@@ -16,6 +16,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
-public @interface Version {
+public @interface ApiVersion {
     String[] value();
 }

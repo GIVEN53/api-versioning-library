@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import given.apiversion.autoconfigure.VersionProperties;
-import given.apiversion.core.annotation.Version;
+import given.apiversion.core.annotation.ApiVersion;
 import given.apiversion.core.util.VersionValidator;
 
 /**
@@ -48,11 +48,11 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
         }
         info = combineRequestMappingInfoOfHandlerType(handlerType, info);
 
-        Version version = getVersionAnnotation(method, handlerType);
-        if (version == null) {
+        ApiVersion apiVersion = getVersionAnnotation(method, handlerType);
+        if (apiVersion == null) {
             return info;
         }
-        return combineRequestMappingInfoOfVersion(info, version);
+        return combineRequestMappingInfoOfVersion(info, apiVersion);
     }
 
     /**
@@ -117,49 +117,49 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
      * <p>
      * {@link AnnotationUtils#getAnnotation} method is used to find a specified annotation type on the given element.
      * <p>
-     * So we use {@link AnnotationUtils#getAnnotation} method to find {@link Version} annotation
-     * because it allows us to specifically target and retrieve the {@link Version} annotation on a given element,
+     * So we use {@link AnnotationUtils#getAnnotation} method to find {@link ApiVersion} annotation
+     * because it allows us to specifically target and retrieve the {@link ApiVersion} annotation on a given element,
      * such as a class or method. However, it's important to note that the implementation may change in the future.
      *
      * @since 0.1.0
      */
-    private Version getVersionAnnotation(Method method, Class<?> handlerType) {
-        Version version = AnnotationUtils.getAnnotation(method, Version.class);
-        if (version == null) {
-            version = AnnotationUtils.getAnnotation(handlerType, Version.class);
+    private ApiVersion getVersionAnnotation(Method method, Class<?> handlerType) {
+        ApiVersion apiVersion = AnnotationUtils.getAnnotation(method, ApiVersion.class);
+        if (apiVersion == null) {
+            apiVersion = AnnotationUtils.getAnnotation(handlerType, ApiVersion.class);
         }
-        return version;
+        return apiVersion;
     }
 
     /**
-     * Combines RequestMappingInfo of @Version annotation
+     * Combines RequestMappingInfo of @ApiVersion annotation
      * <p>
-     * ex) @Version({"1.1", "2.0"}), method's @RequestMapping("/signup") -> /v1.1/signup, /v2.0/signup
+     * ex) @ApiVersion({"1.1", "2.0"}), method's @RequestMapping("/signup") -> /v1.1/signup, /v2.0/signup
      * <p><br>
      * If {@link VersionProperties#isNotBlankUriPrefix()} is true, combine it with method's RequestMappingInfo.
      * <p>
-     * ex) @Version({"1.1", "2.0"}), uriPrefix="/api", method's @RequestMapping("/signup")
+     * ex) @ApiVersion({"1.1", "2.0"}), uriPrefix="/api", method's @RequestMapping("/signup")
      * <p>
      * -> /api/v1.1/signup, /api/v2.0/signup
      *
      * @param info    RequestMappingInfo of method
-     * @param version @Version annotation
+     * @param apiVersion @ApiVersion annotation
      * @return combined RequestMappingInfo
      * @since 0.1.0
      */
-    private RequestMappingInfo combineRequestMappingInfoOfVersion(RequestMappingInfo info, Version version) {
-        String[] apiVersions = version.value();
-        versionValidator.validate(apiVersions);
+    private RequestMappingInfo combineRequestMappingInfoOfVersion(RequestMappingInfo info, ApiVersion apiVersion) {
+        String[] versions = apiVersion.value();
+        versionValidator.validate(versions);
 
         if (versionProperties.isNotBlankUriPrefix()) {
             String prefix = versionProperties.getUriPrefix().trim() + VERSION_PREFIX;
-            return combine(() -> createPaths(apiVersions, prefix), info);
+            return combine(() -> createPaths(versions, prefix), info);
         }
-        return combine(() -> createPaths(apiVersions, VERSION_PREFIX), info);
+        return combine(() -> createPaths(versions, VERSION_PREFIX), info);
     }
 
-    private String[] createPaths(String[] apiVersions, String prefix) {
-        return Arrays.stream(apiVersions)
+    private String[] createPaths(String[] versions, String prefix) {
+        return Arrays.stream(versions)
                 .map(v -> prefix + v)
                 .toArray(String[]::new);
     }
