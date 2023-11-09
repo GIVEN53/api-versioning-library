@@ -23,4 +23,8 @@ public class VersionProperties {
     public void setUriPrefix(String uriPrefix) {
         this.uriPrefix = uriPrefix;
     }
+
+    public boolean isNotBlankUriPrefix() {
+        return uriPrefix != null && !uriPrefix.isBlank();
+    }
 }
