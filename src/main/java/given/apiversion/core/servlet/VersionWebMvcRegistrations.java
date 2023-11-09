@@ -10,6 +10,7 @@ import given.apiversion.autoconfigure.VersionProperties;
  * Spring Web Mvc provides a {@link WebMvcRegistrations} interface for customization support.
  * {@link WebMvcAutoConfiguration.EnableWebMvcConfiguration} sets it to null as the default value.
  * Therefore, we have the flexibility to provide our own implementation.
+ *
  * @see WebMvcAutoConfiguration.EnableWebMvcConfiguration#createRequestMappingHandlerMapping()
  * @since 0.1.0
  */
