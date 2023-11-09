@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import given.apiversion.autoconfigure.VersionProperties;
 import given.apiversion.core.annotation.Version;
+import given.apiversion.core.util.VersionValidator;
 
 /**
  * Creates RequestMappingInfo instances from type and method-level @RequestMapping annotations in @Controller classes.
@@ -25,6 +26,7 @@ import given.apiversion.core.annotation.Version;
 public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMapping {
     private static final String VERSION_PREFIX = "/v";
     private final VersionProperties versionProperties;
+    private final VersionValidator versionValidator = new VersionValidator();
 
     public VersionRequestMappingHandlerMapping(VersionProperties versionProperties) {
         this.versionProperties = versionProperties;
@@ -147,7 +149,8 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
      */
     private RequestMappingInfo combineRequestMappingInfoOfVersion(RequestMappingInfo info, Version version) {
         String[] apiVersions = version.value();
-        // TODO verify apiVersions
+        versionValidator.validate(apiVersions);
+
         if (versionProperties.isNotBlankUriPrefix()) {
             String prefix = versionProperties.getUriPrefix().trim() + VERSION_PREFIX;
             return combine(() -> createPaths(apiVersions, prefix), info);
