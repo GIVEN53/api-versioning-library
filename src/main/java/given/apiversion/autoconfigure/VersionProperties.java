@@ -3,7 +3,7 @@ package given.apiversion.autoconfigure;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * {@link ConfigurationProperties} : Mapping properties that match prefix among properties to objects.
+ * Mapping properties that match a prefix to corresponding objects in the context of {@link ConfigurationProperties}
  *
  * @since 0.1.0
  */
@@ -13,6 +13,10 @@ public class VersionProperties {
      * The prefix of URI.
      * <p>
      * ex) /api
+     * <p>
+     * If you set this property, the URI will be mapped to {uri-prefix}/v1.1, {uri-prefix}/v2.0
+     * <p>
+     * default: ""
      */
     private String uriPrefix = "";
 
