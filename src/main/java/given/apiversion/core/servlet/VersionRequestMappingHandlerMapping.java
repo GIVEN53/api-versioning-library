@@ -165,6 +165,6 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
     }
 
     private RequestMappingInfo combine(Supplier<String[]> supplier, RequestMappingInfo info) {
-        return RequestMappingInfo.paths(supplier.get()).build().combine(info);
+        return RequestMappingInfo.paths(supplier.get()).options(super.getBuilderConfiguration()).build().combine(info);
     }
 }
