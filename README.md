@@ -105,6 +105,9 @@ api:
 <br>
 
 ## Changelog
+### 0.1.2
+- Fixed version mismatch error
+
 ### 0.1.1
 - Fixed build error
 
