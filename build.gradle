@@ -25,7 +25,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter:3.1.5'
     implementation 'org.springframework.boot:spring-boot-starter-web:3.1.5'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:3.1.5'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.1.5'
 }
 
