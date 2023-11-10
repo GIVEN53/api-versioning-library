@@ -142,7 +142,7 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
      * <p>
      * -> /api/v1.1/signup, /api/v2.0/signup
      *
-     * @param info    RequestMappingInfo of method
+     * @param info       RequestMappingInfo of method
      * @param apiVersion @ApiVersion annotation
      * @return combined RequestMappingInfo
      * @since 0.1.0

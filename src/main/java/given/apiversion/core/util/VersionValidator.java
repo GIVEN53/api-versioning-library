@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class VersionValidator {
     private static final String VERSION_REGEX = "^\\d+(\\.\\d+){0,2}$";
+
     public void validate(String[] apiVersions) {
         Arrays.stream(apiVersions)
                 .forEach(this::validateVersionRegex);
