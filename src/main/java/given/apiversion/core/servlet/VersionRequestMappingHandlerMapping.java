@@ -105,9 +105,9 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
         if (typeInfo != null) {
             info = typeInfo.combine(info);
         }
-        if (info.isEmptyMapping()) {
-            info = info.mutate().paths("", "/").options(super.getBuilderConfiguration()).build();
-        }
+        // if (info.isEmptyMapping()) { TODO This method is applicable starting from Spring 6.0.10, Spring Boot 3.1.1 and above.
+        //     info = info.mutate().paths("", "/").options(super.getBuilderConfiguration()).build();
+        // }
         return info;
     }
 
