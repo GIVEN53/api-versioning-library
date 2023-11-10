@@ -7,10 +7,12 @@ The api-versioning Java library helps you manage the API version using Spring Bo
 The library automatically adds the version to the URI and provides a way to manage the version of the controller.
 
 Supports JDK 17, Spring Boot 3.x
+<br>
 
 ## Features
 - Automatically appends the version to the URI through the `@ApiVersion` annotation.
 - Allows customization of the URI prefix.
+<br>
 
 ## Getting Started
 ### 1. Add the JitPack repository to your build file
@@ -48,10 +50,10 @@ dependencies {
         implementation 'com.github.GIVEN53:api-versioning-library:{version}'
 }
 ```
-<br>
-
 > **Warning**
 > you need to replace `{version}` with the latest version.
+
+<br>
 
 ## Usage
 ### 1. `@EnableApiVersion` annotation on your Application class
@@ -92,6 +94,7 @@ GET http://localhost:8080/v1/foo
 POST http://localhost:8080/v1.1/foo/bar
 POST http://localhost:8080/v1.2/foo/bar
 ```
+<br>
 
 ## Setting properties
 ``` yml
@@ -99,6 +102,7 @@ api:
   version:
     uri-prefix: # The prefix of URI. Default is "". if you set "/api", the URI will be "/api/v1/..."
 ```
+<br>
 
 ## Changelog
 ### 0.1.1
