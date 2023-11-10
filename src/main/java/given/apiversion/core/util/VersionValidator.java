@@ -2,6 +2,11 @@ package given.apiversion.core.util;
 
 import java.util.Arrays;
 
+/**
+ * Validates the version format.
+ *
+ * @since 0.1.0
+ */
 public class VersionValidator {
     private static final String VERSION_REGEX = "^\\d+(\\.\\d+){0,2}$";
 
