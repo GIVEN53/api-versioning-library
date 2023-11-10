@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.github.GIVEN53'
-version = '0.1.0'
+version = '0.1.1'
 
 java {
     sourceCompatibility = '17'
@@ -19,7 +19,6 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -32,9 +31,9 @@ dependencies {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            groupId = 'given'
-            artifactId = 'given'
-            version = '0.1.0'
+            groupId = 'com.github.GIVEN53'
+            artifactId = 'api-version'
+            version = '0.1.1'
             from components.java
         }
     }
