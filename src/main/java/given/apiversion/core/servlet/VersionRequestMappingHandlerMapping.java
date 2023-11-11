@@ -3,7 +3,6 @@ package given.apiversion.core.servlet;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.function.Supplier;
 
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -50,7 +49,7 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
 
         ApiVersion apiVersion = getVersionAnnotation(method, handlerType);
         if (apiVersion == null) {
-            return info;
+            return combineRequestMappingInfoWithSharingUriPrefix(info);
         }
         return combineRequestMappingInfoOfVersion(info, apiVersion);
     }
@@ -132,6 +131,21 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
     }
 
     /**
+     * Combines RequestMappingInfo of sharing uri prefix.
+     * <p>
+     * If {@link VersionProperties#ExistUriPrefix()} is true and {@link VersionProperties#isSharingUriPrefix()} is true,
+     * uri prefix will be shared with previous API specs that do not apply {@link ApiVersion} annotation.
+     *
+     * @since 0.2.0
+     */
+    private RequestMappingInfo combineRequestMappingInfoWithSharingUriPrefix(RequestMappingInfo info) {
+        if (versionProperties.ExistUriPrefix() && versionProperties.isSharingUriPrefix()) {
+            return combine(info, versionProperties.getUriPrefix().trim());
+        }
+        return info;
+    }
+
+    /**
      * Combines RequestMappingInfo of @ApiVersion annotation
      * <p>
      * ex) @ApiVersion({"1.1", "2.0"}), method's @RequestMapping("/signup") -> /v1.1/signup, /v2.0/signup
@@ -153,9 +167,9 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
 
         if (versionProperties.ExistUriPrefix()) {
             String prefix = versionProperties.getUriPrefix().trim() + VERSION_PREFIX;
-            return combine(() -> createPaths(versions, prefix), info);
+            return combine(info, createPaths(versions, prefix));
         }
-        return combine(() -> createPaths(versions, VERSION_PREFIX), info);
+        return combine(info, createPaths(versions, VERSION_PREFIX));
     }
 
     private String[] createPaths(String[] versions, String prefix) {
@@ -164,8 +178,8 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
                 .toArray(String[]::new);
     }
 
-    private RequestMappingInfo combine(Supplier<String[]> supplier, RequestMappingInfo info) {
-        return RequestMappingInfo.paths(supplier.get())
+    private RequestMappingInfo combine(RequestMappingInfo info, String... paths) {
+        return RequestMappingInfo.paths(paths)
                 .options(super.getBuilderConfiguration())
                 .build()
                 .combine(info);
