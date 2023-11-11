@@ -51,7 +51,7 @@ dependencies {
 }
 ```
 > **Warning**
-> you need to replace `{version}` with the latest version.
+> You need to replace `{version}` with the latest version.
 
 <br>
 
@@ -100,11 +100,21 @@ POST http://localhost:8080/v1.2/foo/bar
 ``` yml
 api:
   version:
-    uri-prefix: # The prefix of URI. Default is "". if you set "/api", the URI will be "/api/v1/..."
+    uri-prefix: # The prefix of URI. Default is "". if you set /api, the URI will be "/api/v1/..."
+    sharing-uri-prefix: # The uri-prefix property is shared with previous API specs that do not have the @ApiVersion annotation. Default is false.
+
+logging:
+  level:
+    given:
+      apiversion: # The log level of the library. Default is info
 ```
 <br>
 
 ## Changelog
+### 0.2.0
+- Added `sharing-uri-prefix` property
+- Ability to create RequestMappingInfo with the previous path including prefix
+
 ### 0.1.2
 - Fixed version mismatch error
 
