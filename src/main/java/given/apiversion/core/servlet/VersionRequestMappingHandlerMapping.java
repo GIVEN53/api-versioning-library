@@ -136,7 +136,7 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
      * <p>
      * ex) @ApiVersion({"1.1", "2.0"}), method's @RequestMapping("/signup") -> /v1.1/signup, /v2.0/signup
      * <p><br>
-     * If {@link VersionProperties#isNotBlankUriPrefix()} is true, combine it with method's RequestMappingInfo.
+     * If {@link VersionProperties#ExistUriPrefix()} is true, combine it with method's RequestMappingInfo.
      * <p>
      * ex) @ApiVersion({"1.1", "2.0"}), uriPrefix="/api", method's @RequestMapping("/signup")
      * <p>
@@ -151,7 +151,7 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
         String[] versions = apiVersion.value();
         versionValidator.validate(versions);
 
-        if (versionProperties.isNotBlankUriPrefix()) {
+        if (versionProperties.ExistUriPrefix()) {
             String prefix = versionProperties.getUriPrefix().trim() + VERSION_PREFIX;
             return combine(() -> createPaths(versions, prefix), info);
         }
@@ -165,6 +165,9 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
     }
 
     private RequestMappingInfo combine(Supplier<String[]> supplier, RequestMappingInfo info) {
-        return RequestMappingInfo.paths(supplier.get()).options(super.getBuilderConfiguration()).build().combine(info);
+        return RequestMappingInfo.paths(supplier.get())
+                .options(super.getBuilderConfiguration())
+                .build()
+                .combine(info);
     }
 }

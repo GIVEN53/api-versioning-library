@@ -45,7 +45,7 @@ public class VersionProperties {
         this.uriPrefix = uriPrefix;
     }
 
-    public boolean isNotBlankUriPrefix() {
+    public boolean ExistUriPrefix() {
         return uriPrefix != null && !uriPrefix.isBlank();
     }
 
