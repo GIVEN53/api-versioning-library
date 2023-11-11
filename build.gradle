@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.github.GIVEN53'
-version = '0.1.1'
+version = '0.2.0'
 
 java {
     sourceCompatibility = '17'
@@ -33,7 +33,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = 'com.github.GIVEN53'
             artifactId = 'api-version'
-            version = '0.1.1'
+            version = '0.2.0'
             from components.java
         }
     }
